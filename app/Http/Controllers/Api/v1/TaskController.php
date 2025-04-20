@@ -19,12 +19,12 @@ class TaskController extends Controller
             ]);
         }
 
-        return response()->json([
+        $data = [
             'message' => 'Tasks retrieved successfully',
             'status' => 200,
             'data' => $tasks
-        ]);
+        ];
+        
+        return response()->json($data);
     }
-
-    
 }
