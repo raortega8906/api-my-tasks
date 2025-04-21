@@ -69,7 +69,7 @@ class CategoryController extends Controller
         }
 
         $data = [
-            'message' => 'Task retrieved successfully',
+            'message' => 'Category retrieved successfully',
             'status' => 200,
             'data' => $category
         ];
@@ -83,7 +83,7 @@ class CategoryController extends Controller
 
             if (!$category) {
                 return response()->json([
-                    'message' => 'Task not found',
+                    'message' => 'Category not found',
                     'status' => 404
                 ], 404);
             }
@@ -93,7 +93,7 @@ class CategoryController extends Controller
             $category->update($validated);
 
             $data = [
-                'message' => 'Task updated successfully',
+                'message' => 'Category updated successfully',
                 'status' => 200,
                 'data' => $category
             ];
@@ -104,7 +104,7 @@ class CategoryController extends Controller
         catch (\Exception $e) {
 
             return response()->json([
-                'message' => 'Failed to update task',
+                'message' => 'Failed to update category',
                 'status' => 500,
                 'error' => $e->getMessage()
             ], 500);
@@ -118,7 +118,7 @@ class CategoryController extends Controller
 
             if (!$category) {
                 return response()->json([
-                    'message' => 'Task not found',
+                    'message' => 'Category not found',
                     'status' => 404
                 ], 404);
             }
@@ -126,7 +126,7 @@ class CategoryController extends Controller
             $category->delete();
 
             $data = [
-                'message' => 'Task destroy successfully',
+                'message' => 'Category destroy successfully',
                 'status' => 200,
                 'data' => $category
             ];
@@ -137,7 +137,7 @@ class CategoryController extends Controller
         catch (\Exception $e) {
 
             return response()->json([
-                'message' => 'Failed to update task',
+                'message' => 'Failed to update category',
                 'status' => 500,
                 'error' => $e->getMessage()
             ], 500);
