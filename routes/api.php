@@ -14,9 +14,9 @@ Route::prefix('v1')->group(function () {
     // Category
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::post('/categories', [CategoryController::class, 'store']);
-    Route::get('/categories/{categories}', [CategoryController::class, 'show']);
-    Route::put('/categories/{categories}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{categories}', [CategoryController::class, 'destroy']);
+    Route::get('/categories/{category}', [CategoryController::class, 'show']);
+    Route::put('/categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
     // Task
     Route::get('/tasks', [TaskController::class, 'index']);
