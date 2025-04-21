@@ -23,7 +23,6 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'category' => 'required',
             'status' => 'required|in:pending,in_progress,completed'
         ];
     }

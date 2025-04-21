@@ -23,7 +23,6 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'category' => 'required|string',
             'status' => 'required|in:pending,in_progress,completed'
         ];
     }

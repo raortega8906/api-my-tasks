@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('category');
             $table->enum('status', ['pending', 'in_progress', 'completed']);
+            $table->foreignId('category_id')->constrained();
             // $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
