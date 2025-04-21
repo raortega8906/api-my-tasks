@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreTaskRequest;
 use App\Http\Requests\Api\V1\UpdateTaskRequest;
+use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 
 class TaskController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Category $category): JsonResponse
     {
-        $tasks = Task::all();
+        $tasks = $category->tasks;
 
         if ($tasks->isEmpty()) {
             return response()->json([
@@ -20,7 +21,6 @@ class TaskController extends Controller
                 'status' => 200
             ], 200);
         }
-
 
         $data = [
             'message' => 'Tasks retrieved successfully',
@@ -31,12 +31,13 @@ class TaskController extends Controller
         return response()->json($data, 200);
     }
 
-    public function store(StoreTaskRequest $request): JsonResponse
+    public function store(StoreTaskRequest $request, Category $category): JsonResponse
     {
         try {
 
             $validated = $request->validated();
             $validated['status'] = 'pending';
+            $validated['category_id'] = $category->id;
 
             $task = Task::create($validated);
 
