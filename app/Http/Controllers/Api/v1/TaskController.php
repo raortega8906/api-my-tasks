@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreTaskRequest;
+use App\Http\Requests\Api\V1\UpdateTaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +19,7 @@ class TaskController extends Controller
             return response()->json([
                 'message' => 'No tasks found',
                 'status' => 200
-            ]);
+            ], 200);
         }
 
 
@@ -28,7 +29,7 @@ class TaskController extends Controller
             'data' => $tasks
         ];
 
-        return response()->json($data);
+        return response()->json($data, 200);
     }
 
     public function store(StoreTaskRequest $request): JsonResponse
@@ -46,7 +47,7 @@ class TaskController extends Controller
                 'data' => $task
             ];
 
-            return response()->json($data);
+            return response()->json($data, 200);
 
         } 
         catch (\Exception $e) {
@@ -55,7 +56,93 @@ class TaskController extends Controller
                 'message' => 'Failed to create task',
                 'status' => 500,
                 'error' => $e->getMessage()
-            ]);
+            ], 500);
+
+        }
+    }
+
+    public function show(Task $task): JsonResponse
+    {
+        if (!$task) {
+            return response()->json([
+                'message' => 'Task not found',
+                'status' => 404
+            ], 404);
+        }
+
+        $data = [
+            'message' => 'Task retrieved successfully',
+            'status' => 200,
+            'data' => $task
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
+    {
+        try {
+
+            if (!$task) {
+                return response()->json([
+                    'message' => 'Task not found',
+                    'status' => 404
+                ], 404);
+            }
+
+            $validated = $request->validated();
+
+            $task->update($validated);
+
+            $data = [
+                'message' => 'Task updated successfully',
+                'status' => 200,
+                'data' => $task
+            ];
+
+            return response()->json($data, 200);
+
+        }
+        catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Failed to update task',
+                'status' => 500,
+                'error' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
+    public function destroy(Task $task): JsonResponse
+    {
+        try {
+
+            if (!$task) {
+                return response()->json([
+                    'message' => 'Task not found',
+                    'status' => 404
+                ], 404);
+            }
+
+            $task->delete();
+
+            $data = [
+                'message' => 'Task destroy successfully',
+                'status' => 200,
+                'data' => $task
+            ];
+
+            return response()->json($data, 200);
+
+        }
+        catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Failed to update task',
+                'status' => 500,
+                'error' => $e->getMessage()
+            ], 500);
 
         }
     }
