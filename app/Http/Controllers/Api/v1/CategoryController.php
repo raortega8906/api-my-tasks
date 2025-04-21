@@ -30,7 +30,7 @@ class CategoryController extends Controller
         return response()->json($data, 200);
     }
 
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request): JsonResponse
     {
         try {
 
