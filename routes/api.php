@@ -8,8 +8,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Task
+// Category
 
+
+// Task
 Route::prefix('v1')->group(function () {
 
     Route::get('/tasks', [TaskController::class, 'index']);
