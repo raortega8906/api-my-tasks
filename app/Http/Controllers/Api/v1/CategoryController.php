@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreCategoryRequest;
+use App\Http\Requests\Api\V1\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 
@@ -12,9 +13,9 @@ class CategoryController extends Controller
 
     public function index(): JsonResponse
     {
-        $category = Category::all();
+        $categories = Category::all();
 
-        if($category->isEmpty()){
+        if($categories->isEmpty()){
             return response()->json([
                 'message' => 'No categories found',
                 'status' => 200
@@ -24,7 +25,7 @@ class CategoryController extends Controller
         $data = [
             'message' => 'Categories retrieved successfully',
             'status' => 200,
-            'data' => $category
+            'data' => $categories
         ];
 
         return response()->json($data, 200);
@@ -51,6 +52,92 @@ class CategoryController extends Controller
 
             return response()->json([
                 'message' => 'Failed to create category',
+                'status' => 500,
+                'error' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
+    public function show(Category $category): JsonResponse
+    {
+        if (!$category) {
+            return response()->json([
+                'message' => 'Category not found',
+                'status' => 404
+            ], 404);
+        }
+
+        $data = [
+            'message' => 'Task retrieved successfully',
+            'status' => 200,
+            'data' => $category
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
+    {
+        try {
+
+            if (!$category) {
+                return response()->json([
+                    'message' => 'Task not found',
+                    'status' => 404
+                ], 404);
+            }
+
+            $validated = $request->validated();
+
+            $category->update($validated);
+
+            $data = [
+                'message' => 'Task updated successfully',
+                'status' => 200,
+                'data' => $category
+            ];
+
+            return response()->json($data, 200);
+
+        }
+        catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Failed to update task',
+                'status' => 500,
+                'error' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
+    public function destroy(Category $category): JsonResponse
+    {
+        try {
+
+            if (!$category) {
+                return response()->json([
+                    'message' => 'Task not found',
+                    'status' => 404
+                ], 404);
+            }
+
+            $category->delete();
+
+            $data = [
+                'message' => 'Task destroy successfully',
+                'status' => 200,
+                'data' => $category
+            ];
+
+            return response()->json($data, 200);
+
+        }
+        catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Failed to update task',
                 'status' => 500,
                 'error' => $e->getMessage()
             ], 500);
