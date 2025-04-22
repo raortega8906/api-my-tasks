@@ -61,22 +61,35 @@ class TaskController extends Controller
         }
     }
 
-    public function show(Task $task): JsonResponse
+    public function show(Task $task, Category $category): JsonResponse
     {
-        if (!$task) {
+        if (!$task || !$category) {
+
             return response()->json([
-                'message' => 'Task not found',
+                'message' => 'Task in category not found',
                 'status' => 404
             ], 404);
+
         }
+        elseif ($category->id != $task->category_id) {
 
-        $data = [
-            'message' => 'Task retrieved successfully',
-            'status' => 200,
-            'data' => $task
-        ];
+            return response()->json([
+                'message' => 'Task in category not found',
+                'status' => 404
+            ], 404);
 
-        return response()->json($data, 200);
+        }
+        else {
+
+            $data = [
+                'message' => 'Task retrieved successfully',
+                'status' => 200,
+                'data' => $task
+            ];
+    
+            return response()->json($data, 200);
+
+        }        
     }
 
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
