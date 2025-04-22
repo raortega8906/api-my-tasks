@@ -92,28 +92,41 @@ class TaskController extends Controller
         }        
     }
 
-    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
+    public function update(UpdateTaskRequest $request, Task $task, Category $category): JsonResponse
     {
         try {
 
-            if (!$task) {
+            if (!$task || !$category) {
+
                 return response()->json([
-                    'message' => 'Task not found',
+                    'message' => 'Task in category not found',
                     'status' => 404
                 ], 404);
+    
             }
+            elseif ($category->id != $task->category_id) {
+    
+                return response()->json([
+                    'message' => 'Task in category not found',
+                    'status' => 404
+                ], 404);
+    
+            }
+            else {
+                
+                $validated = $request->validated();
 
-            $validated = $request->validated();
+                $task->update($validated);
+    
+                $data = [
+                    'message' => 'Task updated successfully',
+                    'status' => 200,
+                    'data' => $task
+                ];
+    
+                return response()->json($data, 200);
 
-            $task->update($validated);
-
-            $data = [
-                'message' => 'Task updated successfully',
-                'status' => 200,
-                'data' => $task
-            ];
-
-            return response()->json($data, 200);
+            }
 
         }
         catch (\Exception $e) {
