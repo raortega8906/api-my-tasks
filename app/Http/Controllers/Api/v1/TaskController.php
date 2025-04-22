@@ -140,26 +140,39 @@ class TaskController extends Controller
         }
     }
 
-    public function destroy(Task $task): JsonResponse
+    public function destroy(Task $task, Category $category): JsonResponse
     {
         try {
 
-            if (!$task) {
+            if (!$task || !$category) {
+
                 return response()->json([
-                    'message' => 'Task not found',
+                    'message' => 'Task in category not found',
                     'status' => 404
                 ], 404);
+    
             }
+            elseif ($category->id != $task->category_id) {
+    
+                return response()->json([
+                    'message' => 'Task in category not found',
+                    'status' => 404
+                ], 404);
+    
+            }
+            else {
 
-            $task->delete();
+                $task->delete();
 
-            $data = [
-                'message' => 'Task destroy successfully',
-                'status' => 200,
-                'data' => $task
-            ];
+                $data = [
+                    'message' => 'Task destroy successfully',
+                    'status' => 200,
+                    'data' => $task
+                ];
 
-            return response()->json($data, 200);
+                return response()->json($data, 200);
+
+            }
 
         }
         catch (\Exception $e) {
