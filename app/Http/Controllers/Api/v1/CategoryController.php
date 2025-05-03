@@ -13,40 +13,64 @@ class CategoryController extends Controller
 
     public function index(): JsonResponse
     {
-        $categories = Category::all();
+        $user = auth()->user();
 
-        if($categories->isEmpty()){
+        if(!$user){
             return response()->json([
-                'message' => 'No categories found',
-                'status' => 200
-            ], 200);
+                'message' => 'Unauthorized',
+                'status' => 401
+            ], 401);
         }
 
-        $data = [
-            'message' => 'Categories retrieved successfully',
-            'status' => 200,
-            'data' => $categories
-        ];
+        else {
+            $categories = Category::where('user_id', $user->id)->get();
 
-        return response()->json($data, 200);
+            if($categories->isEmpty()){
+                return response()->json([
+                    'message' => 'No categories found',
+                    'status' => 200
+                ], 200);
+            }
+    
+            $data = [
+                'message' => 'Categories retrieved successfully',
+                'status' => 200,
+                'data' => $categories
+            ];
+    
+            return response()->json($data, 200);
+        }
     }
 
     public function store(StoreCategoryRequest $request): JsonResponse
     {
         try {
 
-            $validated = $request->validated();
+            $user = auth()->user();
 
-            $category = Category::create($validated);
+            if(!$user){
+                return response()->json([
+                    'message' => 'Unauthorized',
+                    'status' => 401
+                ], 401);
+            }
 
-            $data = [
-                'message' => 'Category created successfully',
-                'status' => 201,
-                'data' => $category
-            ];
+            else {
+                $validated = $request->validated();
 
-            return response()->json($data, 201);
+                $validated['user_id'] = $user->id;
 
+                $category = Category::create($validated);
+    
+                $data = [
+                    'message' => 'Category created successfully',
+                    'status' => 201,
+                    'data' => $category
+                ];
+    
+                return response()->json($data, 201);
+            }
+            
         }
         catch (\Exception $e) {
 
@@ -61,44 +85,67 @@ class CategoryController extends Controller
 
     public function show(Category $category): JsonResponse
     {
-        if (!$category) {
+        $user = auth()->user();
+
+        if(!$user || $category->user_id !== $user->id){
             return response()->json([
-                'message' => 'Category not found',
-                'status' => 404
-            ], 404);
+                'message' => 'Unauthorized',
+                'status' => 401
+            ], 401);
         }
 
-        $data = [
-            'message' => 'Category retrieved successfully',
-            'status' => 200,
-            'data' => $category
-        ];
-
-        return response()->json($data, 200);
-    }
-
-    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
-    {
-        try {
-
+        else {
             if (!$category) {
                 return response()->json([
                     'message' => 'Category not found',
                     'status' => 404
                 ], 404);
             }
-
-            $validated = $request->validated();
-
-            $category->update($validated);
-
+    
             $data = [
-                'message' => 'Category updated successfully',
+                'message' => 'Category retrieved successfully',
                 'status' => 200,
                 'data' => $category
             ];
-
+    
             return response()->json($data, 200);
+        }
+
+    }
+
+    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
+    {
+        try {
+
+            $user = auth()->user();
+
+            if(!$user || $category->user_id !== $user->id){
+                return response()->json([
+                    'message' => 'Unauthorized',
+                    'status' => 401
+                ], 401);
+            }
+
+            else {
+                if (!$category) {
+                    return response()->json([
+                        'message' => 'Category not found',
+                        'status' => 404
+                    ], 404);
+                }
+    
+                $validated = $request->validated();
+    
+                $category->update($validated);
+    
+                $data = [
+                    'message' => 'Category updated successfully',
+                    'status' => 200,
+                    'data' => $category
+                ];
+    
+                return response()->json($data, 200);
+            }
 
         }
         catch (\Exception $e) {
@@ -116,22 +163,33 @@ class CategoryController extends Controller
     {
         try {
 
-            if (!$category) {
+            $user = auth()->user();
+
+            if(!$user || $category->user_id !== $user->id){
                 return response()->json([
-                    'message' => 'Category not found',
-                    'status' => 404
-                ], 404);
+                    'message' => 'Unauthorized',
+                    'status' => 401
+                ], 401);
             }
 
-            $category->delete();
-
-            $data = [
-                'message' => 'Category destroy successfully',
-                'status' => 200,
-                'data' => $category
-            ];
-
-            return response()->json($data, 200);
+            else {
+                if (!$category) {
+                    return response()->json([
+                        'message' => 'Category not found',
+                        'status' => 404
+                    ], 404);
+                }
+    
+                $category->delete();
+    
+                $data = [
+                    'message' => 'Category destroy successfully',
+                    'status' => 200,
+                    'data' => $category
+                ];
+    
+                return response()->json($data, 200);
+            }
 
         }
         catch (\Exception $e) {
