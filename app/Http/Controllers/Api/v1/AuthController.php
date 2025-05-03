@@ -114,15 +114,25 @@ class AuthController extends Controller
 
     public function profile(Request $request)
     {
-        try {
-            //
+        try {            
+
+            $user = auth()->user();
+
+            return response()->json([
+                'message' => 'User retrieved successfully',
+                'status' => 200,
+                'data' => $user
+            ], 200);
+
         }
         catch (\Exception $e) {
+
             return response()->json([
                 'message' => 'Failed to get user',
                 'status' => 500,
                 'error' => $e->getMessage()
             ], 500);
+            
         }
     }
 }
