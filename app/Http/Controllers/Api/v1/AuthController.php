@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         try {
 
@@ -42,7 +43,7 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         try {
 
@@ -84,7 +85,7 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout(): JsonResponse
     {
         try {
             
@@ -107,7 +108,7 @@ class AuthController extends Controller
         }
     }
 
-    public function refreshToken(Request $request)
+    public function refreshToken(): JsonResponse
     {
         try {
 
@@ -131,7 +132,7 @@ class AuthController extends Controller
         }
     }
 
-    public function profile(Request $request)
+    public function profile(): JsonResponse
     {
         try {            
 
