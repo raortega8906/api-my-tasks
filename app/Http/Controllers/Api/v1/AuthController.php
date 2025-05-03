@@ -101,14 +101,24 @@ class AuthController extends Controller
     public function refreshToken(Request $request)
     {
         try {
-            //
+
+            $token = auth()->refresh();
+
+            return response()->json([
+                'message' => 'Token refreshed successfully',
+                'status' => 200,
+                'new_token' => $token
+            ], 200);
+
         }
         catch (\Exception $e) {
+
             return response()->json([
                 'message' => 'Failed to refresh token',
                 'status' => 500,
                 'error' => $e->getMessage()
             ], 500);
+
         }
     }
 
