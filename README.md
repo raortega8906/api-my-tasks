@@ -27,18 +27,37 @@
 5. Run `php artisan migrate`
 6. Run `php artisan serve`
 
+## API Endpoints
+
 ### Authentication
 
 - **Register**: POST /api/register
 - **Login**: POST /api/login
 
+### Categories
+- **Get all categories**: GET /categories
+- **Get category by id**: GET /categories/{category}
+- **Create**: POST /categories
+- **Update**: PUT /categories/{category}
+- **Delete**: DELETE /categories/{category}
+
+### Example
+
+```json
+{
+    "message": "Categories retrieved successfully",
+    "status": 200,
+    "data": [/* Category objects */]
+}
+```
+    
 ### Tasks
 
-- **Get all tasks**: GET /api/tasks
-- **Get task by id**: GET /api/tasks/{id}
-- **Create**: POST /api/tasks
-- **Update**: PUT /api/tasks/{id}
-- **Delete**: DELETE /api/tasks/{id}
+- **Get all tasks**: GET /tasks/{category}
+- **Get task by id**: GET /tasks/{task}/{category}
+- **Create**: POST /tasks/{category}
+- **Update**: PUT /tasks/{task}/{category}
+- **Delete**: DELETE /tasks/{task}/{category}
 
 ### Example
 
