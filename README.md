@@ -44,13 +44,19 @@
 
 ```json
 {
-    "name": "Task 1",
-    "description": "Description 1",
-    "status": "pending"
+    "message": "Tasks retrieved successfully",
+    "status": 200,
+    "data": [/* Task objects */]
 }
 ```
 
-## License
+## Live Demo
+Frontend: [https://tasks-front.wpcache.es/](https://tasks-front.wpcache.es/)
+Backend: [https://tasks-back.wpcache.es/](https://tasks-back.wpcache.es/)
 
-My Tasks project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## License
+This project is open-source.
+
+## Next Steps
+You can now start using API My Tasks freely.
 
