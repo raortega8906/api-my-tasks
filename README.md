@@ -4,19 +4,19 @@
 
 ## Glossary
 
-- **API**: Application Programming Interface
-- **Laravel**: A web application framework with expressive, elegant syntax
+-   **API**: Application Programming Interface
+-   **Laravel**: A web application framework with expressive, elegant syntax
 
 ## Goals
 
-- Create a REST API for a task management application.
-- Implement tasks management.
+-   Create a REST API for a task management application.
+-   Implement tasks management.
 
 ## Prerequisites
 
-- PHP 8.2 or higher
-- MySQL 8.0 or higher
-- Composer 2.0 or higher
+-   PHP 8.2 or higher
+-   MySQL 8.0 or higher
+-   Composer 2.0 or higher
 
 ### Installation
 
@@ -31,15 +31,16 @@
 
 ### Authentication
 
-- **Register**: POST /api/register
-- **Login**: POST /api/login
+-   **Register**: POST /api/register
+-   **Login**: POST /api/login
 
 ### Categories
-- **Get all categories**: GET /categories
-- **Get category by id**: GET /categories/{category}
-- **Create**: POST /categories
-- **Update**: PUT /categories/{category}
-- **Delete**: DELETE /categories/{category}
+
+-   **Get all categories**: GET /categories
+-   **Get category by id**: GET /categories/{category}
+-   **Create**: POST /categories
+-   **Update**: PUT /categories/{category}
+-   **Delete**: DELETE /categories/{category}
 
 ### Example
 
@@ -47,17 +48,19 @@
 {
     "message": "Categories retrieved successfully",
     "status": 200,
-    "data": [/* Category objects */]
+    "data": [
+        /* Category objects */
+    ]
 }
 ```
-    
+
 ### Tasks
 
-- **Get all tasks**: GET /tasks/{category}
-- **Get task by id**: GET /tasks/{task}/{category}
-- **Create**: POST /tasks/{category}
-- **Update**: PUT /tasks/{task}/{category}
-- **Delete**: DELETE /tasks/{task}/{category}
+-   **Get all tasks**: GET /tasks/{category}
+-   **Get task by id**: GET /tasks/{task}/{category}
+-   **Create**: POST /tasks/{category}
+-   **Update**: PUT /tasks/{task}/{category}
+-   **Delete**: DELETE /tasks/{task}/{category}
 
 ### Example
 
@@ -65,20 +68,25 @@
 {
     "message": "Tasks retrieved successfully",
     "status": 200,
-    "data": [/* Task objects */]
+    "data": [
+        /* Task objects */
+    ]
 }
 ```
 
 ## Documentation
-For detailed API documentation, please refer to the [API Documentation](https://deepwiki.com/raortega8906/api-my-tasks/).
+
+For detailed API documentation, please refer to the [API Documentation](https://tasks-back.wpcache.es/api/documentation).
 
 ## Live Demo
-- **Frontend:** [https://tasks-front.wpcache.es/](https://tasks-front.wpcache.es/)
-- **Backend:** [https://tasks-back.wpcache.es/](https://tasks-back.wpcache.es/)
+
+-   **Frontend:** [https://tasks-front.wpcache.es/](https://tasks-front.wpcache.es/)
+-   **Backend:** [https://tasks-back.wpcache.es/](https://tasks-back.wpcache.es/)
 
 ## License
+
 This project is open-source.
 
 ## Next Steps
-You can now start using API My Tasks freely.
 
+You can now start using API My Tasks freely.
