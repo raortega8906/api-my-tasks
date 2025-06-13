@@ -16,5 +16,6 @@
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
         <h1>Backend API Task</h1>
+        <a href="/api/documentation" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Documentation</a>
     </body>
 </html>
