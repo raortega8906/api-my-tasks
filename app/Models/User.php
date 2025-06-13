@@ -8,6 +8,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * @OA\Schema(
+ *     schema="User",
+ *     type="object",
+ *     title="User",
+ *     required={"id", "name", "email"},
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="name", type="string", example="Juan Pérez"),
+ *     @OA\Property(property="email", type="string", format="email", example="juan@ejemplo.com"),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2024-06-01T12:00:00Z"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-06-01T12:00:00Z")
+ * )
+ */
+
 class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
